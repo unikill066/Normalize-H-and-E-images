@@ -26,8 +26,8 @@ Foot notes on the theory behind this tool:
    ```
    OD = V · S
    S = V^(-1) · OD
-             where V and S are stain vectors and saturation of each stain, respectively
    ```
+   > where V and S are stain vectors and saturation of each stain, respectively
 4. The single value decomposition (SVD) is applied to the OD tuples, creating a plane from SVD directions corresponding to the two largest singular values. This plane is then projected and normalized.
 5. NMF-based algorithms attempt to factor the OD matrix into V and S using an algorithm that automatically finds the correct stain vectors for the image and performs color deconvolution.
 6. The angle at each point is calculated with respect to the SVD direction, and the data is normalized between the 1st and 99th percentiles. A value of 0 corresponds to a white pixel, and 1 corresponds to a black pixel, maintaining stability for low OD values with no stains.
