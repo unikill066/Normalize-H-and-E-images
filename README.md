@@ -20,15 +20,15 @@ The output is put in 3 folders in `/path/to/output/directory`:
   3. norm - normalized images
 
 Foot notes on the theory behind this tool:
-1. H and E stains on an Neuronal Image, H-Hematoxylin stains for neucleic acids (blue-pueple) and eosin stains for proteins (bright pink).
-2. All the color values are converted to their corresponding optical density (OD) values; OD = -log10(I), where I is the RGB color vector and each component is normalized in range of [0, 1].
-   This transformation created a linear combination of OD values.
-   OD-hat, values that pass a pre-defined filter of beta=0.15
-3. Color deconvolution to transform color values into quantitative values of interest:
-   OD = V . S
-   S = V (-1) . OD
-     where V and S are stain vectors and saturation of each of the stains respectively
-4. Calculating the single value decomposition(SVD) on the OD tuples and creating a plane from SVD directions corresponding to 2 largest singular values. This is projected onto a plane and normalized.
-5. NMF based algos attempt to factor the OD matrix into V and S with the algoritum that automatically finds the correct stain vectors for the image and then performs the color deconvolution.
-6. Calculate angle at each point with respect to SVD Directon and the data is put between 1 and 99th percentile, in which, value 0 corresponds to a white pixel and 1 to a black pixel. This is to maintain stability on the low OD value with no stains.
-7. Converting the values back to OD space back to an image.
+1. H and E stains are applied to a Neuronal Image, where H-Hematoxylin stains for nucleic acids (*blue-purple*) and eosin stains for proteins (*bright pink*).
+2. All color values are converted to their corresponding optical density (OD) values using the formula `OD = -log10(I)`, where I is the RGB color vector, and each component is normalized in the range of `[0, 1]`. This transformation results in a linear combination of OD values. `OD-hat` represents values that pass a pre-defined filter with `beta=0.15`.
+3. Color deconvolution is performed to transform color values into quantitative values of interest:
+   ```
+   OD = V · S
+   S = V^(-1) · OD
+             where V and S are stain vectors and saturation of each stain, respectively
+   ```
+4. The single value decomposition (SVD) is applied to the OD tuples, creating a plane from SVD directions corresponding to the two largest singular values. This plane is then projected and normalized.
+5. NMF-based algorithms attempt to factor the OD matrix into V and S using an algorithm that automatically finds the correct stain vectors for the image and performs color deconvolution.
+6. The angle at each point is calculated with respect to the SVD direction, and the data is normalized between the 1st and 99th percentiles. A value of 0 corresponds to a white pixel, and 1 corresponds to a black pixel, maintaining stability for low OD values with no stains.
+7. Finally, the values are converted back to OD space to reconstruct an image.
